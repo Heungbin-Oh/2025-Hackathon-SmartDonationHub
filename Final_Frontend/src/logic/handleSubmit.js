@@ -23,7 +23,8 @@ export async function onHandleSubmit({setFormSubmitted, formData, donImg, setTro
         }
     
         const data = await response.json();
-        if(data.success === true || data.status === 'success'){  
+        // Check if data is true OR has success/status properties
+        if(data === true || data.success === true || data.status === 'success'){  
           setFormSubmitted(true);
           return true;
         } else if(data.status === 'TrollDetected') {
@@ -35,7 +36,7 @@ export async function onHandleSubmit({setFormSubmitted, formData, donImg, setTro
         
     } catch (error) {
         console.error('Error:', error);
-        return false;  // Add explicit return false for errors
+        return false;
     }
 }
 
