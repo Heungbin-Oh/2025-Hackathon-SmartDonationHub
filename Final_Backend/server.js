@@ -49,11 +49,6 @@ const charityRoutes = require('./Routes/charityRoutes');
 app.use('/', homeRoutes);
 app.use('/api/charities', charityRoutes);
 
-// For local development
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 8080;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
 
 // For serverless deployment
 module.exports = serverless(app);
