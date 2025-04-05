@@ -3,21 +3,10 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "maxDuration": 15
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/api/health",
-      "dest": "/server.js",
-      "methods": ["GET"],
-      "headers": {
-        "Cache-Control": "s-maxage=30, stale-while-revalidate"
-      }
-    },
     {
       "src": "/(.*)",
       "dest": "/server.js"
@@ -25,8 +14,7 @@
   ],
   "functions": {
     "server.js": {
-      "memory": 1024,
-      "maxDuration": 15
+      "maxDuration": 60
     }
   }
 }
