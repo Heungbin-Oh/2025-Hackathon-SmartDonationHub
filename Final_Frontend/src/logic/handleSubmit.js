@@ -44,10 +44,10 @@ export async function onHandleCharitySubmit({ setFormSubmitted, formData, setTro
       address: formData.address,
       category: formData.category,
       phone: formData.phone,
-      website: formData.website || undefined, // Send undefined if website is empty
+      website: formData.website || undefined,
     };
 
-    const response = await fetch( apiUrl + 'api/charities', {
+    const response = await fetch( apiUrl + '/api/charities', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

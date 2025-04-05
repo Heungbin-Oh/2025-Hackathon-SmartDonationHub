@@ -9,7 +9,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchCharities = async () => {
       try {
-        const response = await fetch(apiUrl + 'api/charities');
+        const response = await fetch(apiUrl + '/api/charities');
         if (!response.ok) {
           throw new Error("Failed to fetch charities");
         }
