@@ -24,15 +24,12 @@ async function connectDB() {
 
   try {
     const conn = await mongoose.connect(process.env.SECRET_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 3000,
-      socketTimeoutMS: 10000,
-      connectTimeoutMS: 3000,
-      maxPoolSize: 5
+      serverSelectionTimeoutMS: 2000,
+      socketTimeoutMS: 5000,
+      connectTimeoutMS: 2000,
+      maxPoolSize: 1
     });
     
-    // Add connection error handler
     mongoose.connection.on('error', err => {
       console.error('Mongoose connection error:', err);
       cachedDb = null;
@@ -46,12 +43,11 @@ async function connectDB() {
   }
 }
 
-// Simplified health check endpoint that doesn't wait for DB
-app.get('/api/health', (req, res) => {
+// Health check endpoint - no DB dependency
+app.get('/api/health', (_, res) => {
   res.status(200).json({
     status: 'ok',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'production'
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -67,9 +63,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Initialize DB connection
+// Create handler before DB connection
+const handler = serverless(app);
+
+// Initialize DB connection in background
 connectDB().catch(console.error);
 
-// Create and export the serverless handler
-const handler = serverless(app);
 module.exports = handler;
