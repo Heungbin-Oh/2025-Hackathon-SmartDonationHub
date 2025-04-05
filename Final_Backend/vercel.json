@@ -17,5 +17,10 @@
         "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
       }
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  }
 }
