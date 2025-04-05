@@ -3,18 +3,47 @@ const Charity = require('../models/Charity');
 exports.submitCharity = async (req, res) => {
   try {
     const { name, email, address, category, phone, website } = req.body;
-    const newCharity = new Charity({ 
-      name, 
-      email, 
-      address, 
-      category, 
-      phone, 
-      website 
+    
+    // Basic validation
+    if (!name || !email || !address || !category || !phone) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Missing required fields'
+      });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Invalid email format'
+      });
+    }
+
+    const newCharity = new Charity({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      address: address.trim(),
+      category: category.trim(),
+      phone: phone.trim(),
+      website: website ? website.trim() : undefined
     });
+
     await newCharity.save();
-    res.status(201).json({ message: 'Charity submitted successfully!', charity: newCharity });
+
+    res.status(201).json({
+      status: 'success',
+      message: 'Charity submitted successfully!',
+      charity: newCharity
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error submitting charity', error: error.message });
+    console.error('Charity submission error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Error submitting charity',
+      details: error.message
+    });
   }
 };
 
