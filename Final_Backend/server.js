@@ -22,8 +22,8 @@ mongoose.connect(process.env.SECRET_URI, {
 .catch(err => console.error('Could not connect to MongoDB', err));
 
 // Routes
-const homeRoutes = require('../Routes/home');
-const charityRoutes = require('../Routes/charityRoutes');
+const homeRoutes = require('./Routes/home');
+const charityRoutes = require('./Routes/charityRoutes');
 
 app.use('/', homeRoutes);
 app.use('/api/charities', charityRoutes);
