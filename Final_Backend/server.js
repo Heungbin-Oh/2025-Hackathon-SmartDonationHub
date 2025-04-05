@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const serverless = require('serverless-http'); 
+const serverless = require('serverless-http');
 require('dotenv').config();
 
 const app = express();
@@ -19,17 +19,27 @@ app.use(express.json());
 let isConnected = false;
 const connectDB = async () => {
   if (isConnected) return;
-  await mongoose.connect(process.env.SECRET_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  isConnected = true;
+  try {
+    await mongoose.connect(process.env.SECRET_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    isConnected = true;
+    console.log('MongoDB Connected');
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+    throw error;
+  }
 };
 
 // Use a middleware to ensure DB is connected before handling any request
 app.use(async (req, res, next) => {
-  await connectDB();
-  next();
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Database connection failed' });
+  }
 });
 
 // Routes
@@ -39,5 +49,11 @@ const charityRoutes = require('./Routes/charityRoutes');
 app.use('/', homeRoutes);
 app.use('/api/charities', charityRoutes);
 
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
-module.exports = serverless(app);
+// For serverless deployment
+module.exports.handler = serverless(app);
