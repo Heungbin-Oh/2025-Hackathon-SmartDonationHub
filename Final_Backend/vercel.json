@@ -15,18 +15,12 @@
       "dest": "/server.js",
       "methods": ["GET"],
       "headers": {
-        "Cache-Control": "s-maxage=30"
+        "Cache-Control": "s-maxage=60, stale-while-revalidate"
       }
     },
     {
       "src": "/(.*)",
-      "dest": "/server.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
-      }
+      "dest": "/server.js"
     }
   ]
 }
