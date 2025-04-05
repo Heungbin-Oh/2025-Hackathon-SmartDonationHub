@@ -19,21 +19,25 @@ export async function onHandleSubmit({setFormSubmitted, formData, donImg, setTro
         });
     
         if (!response.ok) {
-          throw new Error('Error posting charity');
+          throw new Error('Error posting donation');
         }
     
         const data = await response.json();
-        if(data === true ){
+        if(data.success === true || data.status === 'success'){  
           setFormSubmitted(true);
-        } else{
+          return true;
+        } else if(data.status === 'TrollDetected') {
           setTroll(true);
+          return false;
+        } else {
+          throw new Error('Unexpected response');
         }
         
-      } catch (error) {
+    } catch (error) {
         console.error('Error:', error);
-      }
-    
-} 
+        return false;  // Add explicit return false for errors
+    }
+}
 
 export async function onHandleCharitySubmit({ setFormSubmitted, formData, setTroll }) {
   try {
