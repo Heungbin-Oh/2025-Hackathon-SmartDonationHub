@@ -9,13 +9,17 @@ export default function HomePage() {
   useEffect(() => {
     const fetchCharities = async () => {
       try {
+        console.log('Fetching from:', apiUrl + '/api/charities');
         const response = await fetch(apiUrl + '/api/charities');
         if (!response.ok) {
-          throw new Error("Failed to fetch charities");
+          const errorText = await response.text();
+          throw new Error(`Failed to fetch charities: ${response.status} ${response.statusText} - ${errorText}`);
         }
         const data = await response.json();
+        console.log('Received data:', data);
         setCharities(data);
       } catch (error) {
+        console.error('Fetch error:', error);
         setError(error.message);
       } finally {
         setLoading(false);

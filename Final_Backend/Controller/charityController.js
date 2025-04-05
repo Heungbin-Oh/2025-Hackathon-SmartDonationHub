@@ -40,9 +40,16 @@ exports.getCharitiesByCategory = async (category) => {
 
 exports.getCharities = async (req, res) => {
   try {
+    console.log('Attempting to fetch charities from database');
     const charities = await Charity.find();
+    console.log('Found charities:', charities);
     res.status(200).json(charities);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching charities', error: error.message });
+    console.error('Error in getCharities:', error);
+    res.status(500).json({ 
+      message: 'Error fetching charities', 
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined 
+    });
   }
 };
