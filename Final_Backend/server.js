@@ -16,7 +16,7 @@ app.use(express.json());
 // Connect to MongoDB
 connectToDatabase()
   .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('Could not connect to MongoDB:', err));
+  .catch((err) => console.error('Could not connect to MongoDB(vercel inactivity again):', err));
 
 // Routes
 const homeRoutes = require('./Routes/home');
