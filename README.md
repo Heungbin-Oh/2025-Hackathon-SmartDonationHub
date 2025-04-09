@@ -11,8 +11,7 @@ SmartDonationHub is a food charity service designed to help the process of food 
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Challenges](#challenges)
-- [Getting Started](#getting-started)
-- [License](#license)
+- [Future Enhancements](#future-enhancements)
 
 ---
 
@@ -75,28 +74,52 @@ SmartDonationHub’s architecture is designed to handle both donation and charit
 
 ### **Architecture Diagram**
 
-```mermaid
-flowchart TD
-    A[User Browser] -->|Fill Donation Form| B[Frontend (React)]
-    B -->|POST /donations| C[homeController.js<br>Node.js Backend]
-    C -->|Invoke AI Module| D[aiController.js]
-    D -->|Filter & Categorize| C
-    C -->|Save Donation| E[MongoDB Database]
-    C -->|Send Confirmation Email| F[emailController.js]
-    F --> A
+## **Tech Stack**
 
-    %% Charity Notification Flow
-    C -->|Match Donation Category| G[Charity Data in MongoDB]
-    C -->|Notify Charity| F
+### **Deployment**
 
-    %% Charity Registration Process
-    A2[Charity Browser] -->|Fill Charity Form| B
-    B -->|POST /charities| H[charityController.js<br>Node.js Backend]
-    H -->|Save Charity Info| E
-    H -->|Return Confirmation| B
+- **Vercel:**  
+  Serverless platform hosting both frontend and backend services.
 
-    %% Display Registered Charities
-    B -->|GET /charities| H
-    H -->|Fetch Data| E
-    H -->|Return Charity List| B
+### **Backend**
+
+- **Node.js & JavaScript:**  
+  Powers the API endpoints and server-side logic.
+- **Gemini AI:**  
+  Provides enhanced donation filtering and categorization.
+
+### **Frontend**
+
+- **React:**  
+  Creates a dynamic and engaging user interface.
+
+### **Database**
+
+- **MongoDB:**  
+  A NoSQL database used for storing charity data.
+
+---
+
+## **Challenges**
+
+### **Serverless Environment**
+
+- Managing database connections and cold starts on Vercel’s free tier.
+
+### **AI Integration**
+
+- Ensuring real-time processing for troll detection and accurate donation categorization without significant latency.
+
+### **Notification Management**
+
+- Coordinating email notifications between donors and charities based on donation categories.
+
+## **Future Enhancements**
+
+### **Serverless Environment**
+
+- to keep database connections, it needs to use a paid tier to avoid DB connection inactivity on Vercel’s free tier.
+
+```
+
 ```
