@@ -74,6 +74,34 @@ SmartDonationHub’s architecture is designed to handle both donation and charit
 
 ### **Architecture Diagram**
 
+```mermaid
+flowchart TD
+    A[User Browser] -->|Fill Donation Form| B[Frontend (React)]
+    B -->|POST /donations| C[homeController.js<br>Node.js Backend]
+    C -->|Invoke AI Module| D[aiController.js]
+    D -->|Filter & Categorize| C
+    C -->|Save Donation| E[MongoDB Database]
+    C -->|Send Confirmation Email| F[emailController.js]
+    F --> A
+
+    %% Charity Notification Flow
+    C -->|Match Donation Category| G[Charity Data in MongoDB]
+    C -->|Notify Charity| F
+
+    %% Charity Registration Process
+    A2[Charity Browser] -->|Fill Charity Form| B
+    B -->|POST /charities| H[charityController.js<br>Node.js Backend]
+    H -->|Save Charity Info| E
+    H -->|Return Confirmation| B
+
+    %% Display Registered Charities
+    B -->|GET /charities| H
+    H -->|Fetch Data| E
+    H -->|Return Charity List| B
+```
+
+---
+
 ## **Tech Stack**
 
 ### **Deployment**
