@@ -119,7 +119,3 @@ SmartDonationHub’s architecture is designed to handle both donation and charit
 ### **Serverless Environment**
 
 - to keep database connections, it needs to use a paid tier to avoid DB connection inactivity on Vercel’s free tier.
-
-```
-
-```
