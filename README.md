@@ -1,5 +1,7 @@
 # **SmartDonationHub**
 
+![alt text](image.png)
+
 SmartDonationHub is a food charity service designed to help the process of food donations with **AI**. Individuals can easily donate food items, while registered charities can claim and distribute these donations efficiently. Powered by artificial intelligence, SmartDonationHub automatically filters donation entries through advanced features such as troll detection and donation category detection.
 
 ---
